@@ -5,7 +5,7 @@ client = TestClient(app)
 
 
 def test_get_price():
-    url = "http://localhost:8000/prices/latest?symbol=AAPL&provider=yfinance"
+    url = "/prices/latest?symbol=AAPL&provider=yfinance"
     response = client.get(url)
 
     assert response.status_code == 200
@@ -20,7 +20,7 @@ def test_get_price():
     assert "provider"in data
 
 def test_poll_prices():
-    url = "http://localhost:8000/prices/poll"
+    url = "/prices/poll"
     body = {"symbols": ["AAPL", "MSFT"], "interval": 60, "provider": "alpha_vantage"}
     response = client.post(url, json=body)
 
