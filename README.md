@@ -143,12 +143,17 @@ pip install <package>
 
 ---
 
-## 🔮 Future Improvements
+## 📬 Postman Collection
 
-- Kafka consumer to persist prices to DB
-- Prometheus + Grafana for monitoring
-- More price providers (e.g., Alpha Vantage)
-- Authentication & rate limiting
+You can test the API via the provided Postman collection and environment:
+
+- [MarketData.postman_collection.json](./postman/MarketData.postman_collection.json)
+- [MarketData.postman_environment.json](./postman/MarketData.postman_environment.json)
+
+### Instructions:
+1. Import the collection and environment into Postman.
+2. Select the environment `MarketData Local API`.
+3. Run individual requests or the full test suite.
 
 ---
 
