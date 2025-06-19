@@ -23,11 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t market_api:ci .
-
       - name: Set up Docker Compose
-        run: docker compose up -d --build
+        run: docker-compose up -d --build
 
       - name: Wait for API to be healthy
         run: |
@@ -38,7 +35,11 @@ jobs:
           done
 
       - name: Run flake8 lint
-        run: docker run --rm market_api:ci flake8 app/
+        run: docker exec market_api flake8 app/
 
       - name: Run pytest tests
-        run: docker run --rm -e PYTHONPATH=/app market_api:ci pytest --maxfail=1 --disable-warnings -q
+        run: docker exec -e PYTHONPATH=/app market_api pytest --maxfail=1 --disable-warnings -q
+
+      - name: Tear down
+        if: always()
+        run: docker-compose down -v
