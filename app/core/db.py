@@ -1,4 +1,5 @@
 from typing import AsyncGenerator
+from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from app.core.config import get_settings
 

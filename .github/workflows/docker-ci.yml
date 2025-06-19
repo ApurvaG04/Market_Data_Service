@@ -1,0 +1,12 @@
+- name: Build and run containers
+  run: |
+    docker-compose -f docker-compose.yml up -d --build
+
+- name: Run tests in container
+  run: |
+    docker-compose exec -T market_api pytest
+
+- name: Lint code
+  run: |
+    docker-compose exec -T market_api flake8 app \
+      --count --select=E9,F63,F7,F82 --show-source --statistics
