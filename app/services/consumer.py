@@ -2,7 +2,6 @@ from confluent_kafka import Consumer
 import os
 from app.main import logger
 
-
 conf = {
     'bootstrap.servers': os.getenv("KAFKA_BOOTSTRAP_SERVERS"),
     'group.id': 'market-group',
@@ -11,6 +10,7 @@ conf = {
 
 consumer = Consumer(conf)
 consumer.subscribe(['price-events'])
+
 
 def consumer_message(consumer):
     try:

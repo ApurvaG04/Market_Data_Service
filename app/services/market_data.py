@@ -1,9 +1,9 @@
 import asyncio
 import yfinance as yf
-from datetime import datetime
 from app.schemas.price import PriceResponse, PollRequest
 from app.services.producer import publish_price_event
 from uuid import uuid4
+
 
 async def get_latest_price(symbol: str, provider: str) -> PriceResponse:
     if provider == "yfinance":
@@ -23,16 +23,17 @@ async def get_latest_price(symbol: str, provider: str) -> PriceResponse:
             "price": price_response.price,
             "timestamp": price_response.timestamp.isoformat(),
             "source": price_response.provider,
-            "raw_response": "{}" 
+            "raw_response": "{}"
         }        
-        publish_price_event(event_data)        
+        publish_price_event(event_data)
         return price_response
     else:
         raise NotImplementedError(f"Provider '{provider}' is not supported yet")
 
+
 async def start_polling(req: PollRequest) -> dict:
     job_id = f"poll_{uuid4().hex[:8]}"
-    
+
     async def poll_symbol(symbol: str, interval: int):
         while True:
             try:

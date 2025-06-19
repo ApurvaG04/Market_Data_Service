@@ -9,7 +9,9 @@ class PriceResponse(BaseModel):
     timestamp: datetime
     provider: str
 
+
 class PollRequest(BaseModel):
     symbols: List[str]
     interval: int  # in seconds
     provider: Literal["yfinance", "alpha_vantage", "finnhub"] = "yfinance"
+    
