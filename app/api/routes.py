@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter
 from app.schemas.price import PriceResponse, PollRequest
 from app.services.market_data import get_latest_price, start_polling
+
 
 router = APIRouter()
 

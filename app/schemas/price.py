@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class PriceResponse(BaseModel):
@@ -13,4 +13,3 @@ class PollRequest(BaseModel):
     symbols: List[str]
     interval: int  # in seconds
     provider: Literal["yfinance", "alpha_vantage", "finnhub"] = "yfinance"
-

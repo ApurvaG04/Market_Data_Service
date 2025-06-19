@@ -1,5 +1,6 @@
 import requests
 
+
 def test_get_price():
     url = "http://localhost:8000/prices/latest?symbol=AAPL&provider=yfinance"
     response = requests.get(url)

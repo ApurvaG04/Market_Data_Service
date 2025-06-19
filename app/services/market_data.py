@@ -24,14 +24,11 @@ async def get_latest_price(symbol: str, provider: str) -> PriceResponse:
             "timestamp": price_response.timestamp.isoformat(),
             "source": price_response.provider,
             "raw_response": "{}" 
-        }
-        
-        publish_price_event(event_data)
-        
+        }        
+        publish_price_event(event_data)        
         return price_response
     else:
         raise NotImplementedError(f"Provider '{provider}' is not supported yet")
-
 
 async def start_polling(req: PollRequest) -> dict:
     job_id = f"poll_{uuid4().hex[:8]}"
@@ -39,7 +36,7 @@ async def start_polling(req: PollRequest) -> dict:
     async def poll_symbol(symbol: str, interval: int):
         while True:
             try:
-                price = await get_latest_price(symbol, "yfinance")
+                await get_latest_price(symbol, "yfinance")
     
             except Exception as e:
                 print(f"Polling error for {symbol}: {e}")

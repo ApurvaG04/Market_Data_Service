@@ -5,6 +5,7 @@ from app.api.routes import router
 from app.core.db import engine
 from app.models.base import Base
 
+
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager

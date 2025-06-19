@@ -3,6 +3,7 @@ import json
 import logging
 from confluent_kafka import Producer
 
+
 conf = {
     "bootstrap.servers": os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 }
