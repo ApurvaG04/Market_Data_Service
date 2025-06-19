@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy>=2.0
+psycopg2-binary
+asyncpg
+alembic
+sqlmodel
+yfinance
+pydantic
+pydantic-settings
+httpx
+confluent-kafka
+python-dotenv
