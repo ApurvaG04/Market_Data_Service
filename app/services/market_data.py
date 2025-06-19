@@ -24,11 +24,12 @@ async def get_latest_price(symbol: str, provider: str) -> PriceResponse:
             "timestamp": price_response.timestamp.isoformat(),
             "source": price_response.provider,
             "raw_response": "{}"
-        }        
+        }
         publish_price_event(event_data)
         return price_response
     else:
-        raise NotImplementedError(f"Provider '{provider}' is not supported yet")
+        raise NotImplementedError(
+            f"Provider '{provider}' is not supported yet")
 
 
 async def start_polling(req: PollRequest) -> dict:
@@ -38,14 +39,13 @@ async def start_polling(req: PollRequest) -> dict:
         while True:
             try:
                 await get_latest_price(symbol, "yfinance")
-    
             except Exception as e:
                 print(f"Polling error for {symbol}: {e}")
             await asyncio.sleep(interval)
-    
+
     for sym in req.symbols:
         asyncio.create_task(poll_symbol(sym, req.interval))
-    
+
     return {
         "job_id": job_id,
         "status": "accepted",
