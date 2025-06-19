@@ -28,7 +28,7 @@ jobs:
 
       - name: Set up Docker Compose
         run: docker compose up -d --build
-        
+
       - name: Wait for API to be healthy
         run: |
           for i in {1..30}; do
@@ -41,4 +41,4 @@ jobs:
         run: docker run --rm market_api:ci flake8 app/
 
       - name: Run pytest tests
-        run: docker run --rm market_api:ci pytest --maxfail=1 --disable-warnings -q
+        run: docker run --rm -e PYTHONPATH=/app market_api:ci pytest --maxfail=1 --disable-warnings -q
