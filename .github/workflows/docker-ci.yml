@@ -7,18 +7,36 @@ on:
     branches: [main]
 
 jobs:
-  build-test:
+  test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_DB}
+        ports:
+          - 5432:5432
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t market_api:ci .
+      - name: Set up Docker Compose
+        run: docker-compose up -d --build
 
+      - name: Wait for API to be healthy
+        run: |
+          for i in {1..30}; do
+            curl --fail http://localhost:8000/docs && break
+            echo "Waiting for API..."
+            sleep 2
+          done
 
-      - name: Run flake8 lint
-        run: docker run --rm market_api:ci flake8 app/
+      - name: Run flake8
+        run: docker-compose exec -T api flake8 app/
 
-      - name: Run pytest tests
-        run: docker run --rm market_api:ci pytest --maxfail=1 --disable-warnings -q
+      - name: Run pytest
+        run: docker-compose exec -T api pytest --maxfail=1 --disable-warnings -q
