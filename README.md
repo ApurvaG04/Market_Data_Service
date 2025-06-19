@@ -73,7 +73,8 @@ POST /prices/poll
 ```json
 {
   "symbols": ["AAPL", "GOOG"],
-  "interval": 60
+  "interval": 60,
+  "provider": "alpha_vantage"
 }
 ```
 
