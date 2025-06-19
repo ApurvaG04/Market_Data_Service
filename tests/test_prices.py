@@ -1,9 +1,12 @@
 import requests
+from fastapi.testclient import TestClient
+
+client = TestClient(app)
 
 
 def test_get_price():
     url = "http://localhost:8000/prices/latest?symbol=AAPL&provider=yfinance"
-    response = requests.get(url)
+    response = client.get(url)
 
     assert response.status_code == 200
 
@@ -19,7 +22,7 @@ def test_get_price():
 def test_poll_prices():
     url = "http://localhost:8000/prices/poll"
     body = {"symbols": ["AAPL", "MSFT"], "interval": 60, "provider": "alpha_vantage"}
-    response = requests.post(url, json=body)
+    response = client.post(url, json=body)
 
     assert response.status_code == 202
 
