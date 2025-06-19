@@ -67,12 +67,14 @@ GET /prices/latest?symbol=AAPL&provider=yfinance
 #### POST `/prices/poll`
 
 Start polling prices for a list of symbols.
-
-```json
+```http
 POST /prices/poll
+```
+```json
 {
   "symbols": ["AAPL", "GOOG"],
-  "interval": 60
+  "interval": 60,
+  "provider": "alpha_vantage"
 }
 ```
 
