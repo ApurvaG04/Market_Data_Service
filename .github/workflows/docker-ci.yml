@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
 
     services:
@@ -21,11 +21,10 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Docker Compose
-        run: docker-compose up -d --build
+      - name: Build Docker image
+        run: docker build -t market_api:ci .
 
       - name: Wait for API to be healthy
         run: |
@@ -35,8 +34,8 @@ jobs:
             sleep 2
           done
 
-      - name: Run flake8
-        run: docker-compose exec -T api flake8 app/
+      - name: Run flake8 lint
+        run: docker run --rm market_api:ci flake8 app/
 
-      - name: Run pytest
-        run: docker-compose exec -T api pytest --maxfail=1 --disable-warnings -q
+      - name: Run pytest tests
+        run: docker run --rm market_api:ci pytest --maxfail=1 --disable-warnings -q
