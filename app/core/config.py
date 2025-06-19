@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     postgres_password: str
     postgres_db: str
 
-    model_config = ConfigDict(env_file = ".env")
+    model_config = ConfigDict(env_file=".env")
 
 
 @lru_cache
